@@ -1,15 +1,12 @@
 ---
-title: Oil Book 阅读索引
-description: Oil Book 实战指南的专题目录和逐篇阅读笔记。
+title: Vibe Coding 实战手册
+description: 从第一次用 Agent，到设计、开发和发布自己的项目。
 layout: reading-index
 weight: 10
 params:
-  author: Oil 欧呦
-  source: https://book.oiloil.org/articles
   topics:
     - id: vibe-coding-course
       title: "从 0 到 1 学 Vibe Coding"
-      note: "系列规划 9 章，原站目录目前列出 8 章。"
       articles:
         - ai-agent-common-operations
         - ai-and-dev-core-concepts
@@ -46,4 +43,4 @@ params:
         - indie-dev-stripe-payment
 ---
 
-点标题打开本站阅读笔记，也可以直接打开原文。笔记根据公开可见的内容与文章导读整理，并附自拟练习。Pro 标记表示原站会员文章。
+选题参考 Oil Book 实战指南。

@@ -2,22 +2,16 @@
 {{ partial "breadcrumbs.html" . }}
 <article class="note">
   <header class="section-header">
-    {{ if .Params.source }}<p class="note-kicker">阅读笔记{{ with .Params.chapter }} · 第 {{ . }} 章{{ end }}</p>{{ end }}
+    {{ with .Params.chapter }}<p class="note-kicker">第 {{ . }} 章</p>{{ end }}
     <h1>{{ .Title }}</h1>
     {{ if .Description }}<p class="intro">{{ .Description }}</p>{{ end }}
     {{ if not .Date.IsZero }}<time class="meta" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time>{{ end }}
-    {{ with .Params.source }}
-    <div class="note-source-meta">
-      {{ with $.Parent.Params.author }}<span>原文作者 {{ . }}</span>{{ end }}
-      {{ with $.Params.source_date }}<span>原文发表于 <time datetime="{{ . }}">{{ . }}</time></span>{{ end }}
-      {{ if $.Params.pro }}<span class="chip chip--sm chip--soft chip--accent" title="原站 Pro 会员文章">Pro</span>{{ end }}
-    </div>
-    <div class="note-actions">
-      <a class="button button--primary button--sm" href="{{ . }}">阅读原文 <span aria-hidden="true">↗</span></a>
-      <a class="button button--secondary button--sm" href="{{ $.Parent.RelPermalink }}">返回索引</a>
-    </div>
-    {{ end }}
   </header>
   <div class="prose">{{ .Content }}</div>
+  {{ with .Parent }}
+  {{ if .Params.topics }}
+  <p class="note-back"><a class="button button--secondary button--sm" href="{{ .RelPermalink }}">返回专题</a></p>
+  {{ end }}
+  {{ end }}
 </article>
 {{ end }}

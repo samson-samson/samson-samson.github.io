@@ -6,13 +6,9 @@
 <article>
   <header class="card card--default collection-header" data-theme="dark">
     <div class="card__header collection-heading">
-      <p class="collection-series">Vibe Coding</p>
       <h1>{{ .Title }}</h1>
       <p class="collection-description">{{ .Description }}</p>
-      <div class="collection-actions">
-        <a class="button button--primary button--sm" href="{{ .Params.source }}">查看原站 <span aria-hidden="true">↗</span></a>
-        <p class="collection-count">{{ len $topics }} 个专题 <span aria-hidden="true">·</span> {{ $articleCount }} 篇文章</p>
-      </div>
+      <p class="collection-count">{{ len $topics }} 个专题 <span aria-hidden="true">·</span> {{ $articleCount }} 篇文章</p>
     </div>
     <img class="collection-cover" src="{{ "images/reading-desk.webp" | relURL }}" alt="" width="1200" height="900">
   </header>
@@ -30,7 +26,6 @@
     <div class="collection-content">
       <div class="collection-intro">
         {{ .Content }}
-        <p class="collection-meta">原文作者 {{ .Params.author }}</p>
       </div>
       {{ range $topics }}
       <section class="card card--default topic" aria-labelledby="{{ .id }}">
@@ -38,7 +33,6 @@
           <h2 class="card__title" id="{{ .id }}">{{ .title }}</h2>
           <span class="chip chip--sm chip--secondary">{{ len .articles }} 篇</span>
         </header>
-        {{ with .note }}<p class="topic-note">{{ . }}</p>{{ end }}
         <ul class="card__content reading-list">
           {{ range .articles }}
           {{ $slug := . }}
@@ -47,8 +41,6 @@
             <div class="reading-title">
               {{ with .Params.chapter }}<span class="chapter">第 {{ . }} 章</span>{{ end }}
               <h3><a class="reading-note-link" href="{{ .RelPermalink }}">{{ .Title }} <span aria-hidden="true">→</span></a></h3>
-              {{ if .Params.pro }}<span class="chip chip--sm chip--soft chip--accent pro-badge" title="原站 Pro 会员文章">Pro</span>{{ end }}
-              <a class="reading-original-link" href="{{ .Params.source }}" aria-label="{{ .Title }}的原文">原文 <span aria-hidden="true">↗</span></a>
             </div>
             <p>{{ .Description }}</p>
           </li>
