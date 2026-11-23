@@ -1,6 +1,6 @@
 # Samson 的笔记
 
-用 Hugo 和 Markdown 维护的个人博客。页面使用 HeroUI v3 Default 主题和 `@heroui/styles` 的 Button、Card、Chip 样式。阅读索引位于 `content/notes/vibe-coding/oil-book/index.md`，其专题顺序、标题和导读都从这个文件渲染。
+用 Hugo 和 Markdown 维护的个人博客。页面使用 HeroUI v3 Default 主题和 `@heroui/styles` 的 Button、Card、Chip 样式。Vibe Coding 实战手册的目录和原创短文位于 `content/notes/vibe-coding/oil-book/`。
 
 ## 写作和预览
 
@@ -29,7 +29,7 @@ npx playwright install chromium
 npm test
 ```
 
-浏览器用例以 GitHub Pages 项目子路径的方式访问构建产物，覆盖桌面和手机上的主导航、索引分组、链接及布局。截图保存在 `test-results/`。人工验收时，从首页进入「读书笔记 → Vibe Coding → Oil Book 阅读索引」，检查手机文字换行，确认一条专题跳转和一个原文链接的阅读体验。
+浏览器用例以 GitHub Pages 项目子路径的方式访问构建产物，覆盖桌面和手机上的主导航、专题分组、正文和站内链接。截图保存在 `test-results/`。人工验收时，从首页进入「读书笔记 → Vibe Coding → Vibe Coding 实战手册」，检查手机文字换行，从目录点开一篇正文并返回专题。
 
 ## 发布
 

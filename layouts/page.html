@@ -2,10 +2,16 @@
 {{ partial "breadcrumbs.html" . }}
 <article class="note">
   <header class="section-header">
+    {{ with .Params.chapter }}<p class="note-kicker">第 {{ . }} 章</p>{{ end }}
     <h1>{{ .Title }}</h1>
     {{ if .Description }}<p class="intro">{{ .Description }}</p>{{ end }}
     {{ if not .Date.IsZero }}<time class="meta" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time>{{ end }}
   </header>
   <div class="prose">{{ .Content }}</div>
+  {{ with .Parent }}
+  {{ if .Params.topics }}
+  <p class="note-back"><a class="button button--secondary button--sm" href="{{ .RelPermalink }}">返回专题</a></p>
+  {{ end }}
+  {{ end }}
 </article>
 {{ end }}
