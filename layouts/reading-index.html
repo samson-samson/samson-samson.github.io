@@ -41,14 +41,20 @@
         {{ with .note }}<p class="topic-note">{{ . }}</p>{{ end }}
         <ul class="card__content reading-list">
           {{ range .articles }}
+          {{ $slug := . }}
+          {{ with $.GetPage (printf "./%s" $slug) }}
           <li class="reading-item">
             <div class="reading-title">
-              {{ with .chapter }}<span class="chapter">第 {{ . }} 章</span>{{ end }}
-              <h3><a href="{{ .url }}">{{ .title }} <span aria-hidden="true">↗</span></a></h3>
-              {{ if .pro }}<span class="chip chip--sm chip--soft chip--accent pro-badge" title="原站 Pro 会员文章">Pro</span>{{ end }}
+              {{ with .Params.chapter }}<span class="chapter">第 {{ . }} 章</span>{{ end }}
+              <h3><a class="reading-note-link" href="{{ .RelPermalink }}">{{ .Title }} <span aria-hidden="true">→</span></a></h3>
+              {{ if .Params.pro }}<span class="chip chip--sm chip--soft chip--accent pro-badge" title="原站 Pro 会员文章">Pro</span>{{ end }}
+              <a class="reading-original-link" href="{{ .Params.source }}" aria-label="{{ .Title }}的原文">原文 <span aria-hidden="true">↗</span></a>
             </div>
-            <p>{{ .summary }}</p>
+            <p>{{ .Description }}</p>
           </li>
+          {{ else }}
+          {{ errorf "%s has no reading note for %q" $.Path $slug }}
+          {{ end }}
           {{ end }}
         </ul>
       </section>

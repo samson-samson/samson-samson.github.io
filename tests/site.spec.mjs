@@ -47,7 +47,10 @@ test('从首页打开 Vibe Coding 索引并跳转专题', async ({ page }, testI
     await expect(topics.nth(index).getByRole('listitem')).toHaveCount(count);
   }
 
-  const articles = await page.locator('.reading-title a').evaluateAll(links => links.map(link => link.href));
+  const notes = await page.locator('.reading-note-link').evaluateAll(links => links.map(link => link.href));
+  expect(new Set(notes).size).toBe(21);
+  expect(notes.every(url => url.startsWith(page.url()))).toBe(true);
+  const articles = await page.locator('.reading-original-link').evaluateAll(links => links.map(link => link.href));
   expect(new Set(articles).size).toBe(21);
   expect(articles.every(url => url.startsWith('https://book.oiloil.org/articles/'))).toBe(true);
   await expect(page.locator('.pro-badge')).toHaveCount(12);
@@ -55,10 +58,21 @@ test('从首页打开 Vibe Coding 索引并跳转专题', async ({ page }, testI
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(await page.evaluate(() => window.innerWidth));
   await page.screenshot({ path: testInfo.outputPath('reading-index.png') });
 
+  await page.getByRole('link', { name: '如何使用 AI 做出有高级感的设计', exact: true }).click();
+  await expect(page).toHaveURL(/oil-book\/ai-ui-design\/$/);
+  await expect(page.getByRole('heading', { level: 1, name: '如何使用 AI 做出有高级感的设计' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: '用同一批内容比较设计' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: '配图与动效的本地练习' })).toBeVisible();
+  await expect(page.locator('.note-source-meta time')).toHaveText('2026-10-30');
+  await expect(page.getByRole('link', { name: '阅读原文' })).toHaveAttribute('href', 'https://book.oiloil.org/articles/ai-ui-design');
+  await expect(page.getByRole('link', { name: '跳到原站的配图与动效小节' })).toHaveAttribute('href', 'https://book.oiloil.org/articles/ai-ui-design#article-section-5');
+  await page.screenshot({ path: testInfo.outputPath('ai-ui-design-note.png') });
+  await page.getByRole('link', { name: '返回索引' }).click();
+
   await page.getByRole('navigation', { name: '专题目录' }).getByRole('link', { name: /商业化与创作/ }).click();
   await expect(page).toHaveURL(/#business$/);
   await expect(page.getByRole('heading', { name: '商业化与创作' })).toBeInViewport();
-  await expect(page.getByRole('link', { name: '个人开发者收款指南' })).toHaveAttribute('href', 'https://book.oiloil.org/articles/indie-dev-stripe-payment');
+  await expect(page.getByRole('link', { name: '个人开发者收款指南的原文' })).toHaveAttribute('href', 'https://book.oiloil.org/articles/indie-dev-stripe-payment');
 
   await page.getByRole('navigation', { name: '主导航' }).getByRole('link', { name: '随笔' }).click();
   await expect(page.getByRole('heading', { name: '随笔' })).toBeVisible();

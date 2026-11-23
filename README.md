@@ -1,6 +1,6 @@
 # Samson 的笔记
 
-用 Hugo 和 Markdown 维护的个人博客。页面使用 HeroUI v3 Default 主题和 `@heroui/styles` 的 Button、Card、Chip 样式。阅读索引位于 `content/notes/vibe-coding/oil-book/index.md`，其专题顺序、标题和导读都从这个文件渲染。
+用 Hugo 和 Markdown 维护的个人博客。页面使用 HeroUI v3 Default 主题和 `@heroui/styles` 的 Button、Card、Chip 样式。Oil Book 专题顺序在 `content/notes/vibe-coding/oil-book/_index.md`，每篇阅读笔记和原文信息在同目录的 Markdown 中。
 
 ## 写作和预览
 
