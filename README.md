@@ -1,13 +1,19 @@
 # Samson 的笔记
 
-用 Hugo 和 Markdown 维护的个人博客。阅读索引位于 `content/notes/vibe-coding/oil-book/index.md`，其专题顺序、标题和导读都从这个文件渲染。
+用 Hugo 和 Markdown 维护的个人博客。页面使用 HeroUI v3 Default 主题和 `@heroui/styles` 的 Button、Card、Chip 样式。阅读索引位于 `content/notes/vibe-coding/oil-book/index.md`，其专题顺序、标题和导读都从这个文件渲染。
 
 ## 写作和预览
 
-本地构建与 CI 使用 Hugo 0.170.1。浏览器验收另需 Node.js 24 和 Python 3。
+本地构建与 CI 使用 Hugo 0.170.1 和 Node.js 24。浏览器验收另需 Python 3。
 
 ```sh
+npm ci
 hugo server -D
+```
+
+另开终端运行新建命令。
+
+```sh
 hugo new content notes/vibe-coding/practice/my-notes/index.md
 hugo new content essays/my-essay/index.md
 ```
@@ -17,8 +23,8 @@ hugo new content essays/my-essay/index.md
 ## 检查
 
 ```sh
-hugo --gc --minify --panicOnWarning
 npm ci
+hugo --gc --minify --panicOnWarning
 npx playwright install chromium
 npm test
 ```

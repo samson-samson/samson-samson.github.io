@@ -2,7 +2,10 @@ import { expect, test } from '@playwright/test';
 
 test('从首页打开 Vibe Coding 索引并跳转专题', async ({ page }, testInfo) => {
   await page.goto('./');
-  await expect(page.getByRole('heading', { name: '读书笔记.' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: '读书笔记', exact: true })).toBeVisible();
+  const browse = page.getByRole('link', { name: '浏览读书笔记' });
+  await expect(browse).toHaveCSS('display', 'inline-flex');
+  await expect.poll(() => page.locator('.feature img').evaluate(image => image.naturalWidth)).toBeGreaterThan(0);
   await page.screenshot({ path: testInfo.outputPath('home.png') });
 
   await page.keyboard.press('Tab');
@@ -10,13 +13,33 @@ test('从首页打开 Vibe Coding 索引并跳转专题', async ({ page }, testI
   await page.keyboard.press('Enter');
   await expect(page).toHaveURL(/#main$/);
 
-  await page.getByRole('link', { name: '浏览读书笔记' }).click();
+  await browse.click();
   await expect(page.getByRole('heading', { name: '读书笔记', exact: true })).toBeVisible();
   await page.getByRole('main').getByRole('link', { name: /Vibe Coding/ }).click();
   await expect(page.getByRole('heading', { name: 'Vibe Coding', exact: true })).toBeVisible();
   await page.getByRole('link', { name: /Oil Book 阅读索引/ }).click();
 
-  await expect(page.getByRole('heading', { name: 'Oil Book 阅读索引' })).toBeVisible();
+  const indexTitle = page.getByRole('heading', { name: 'Oil Book 阅读索引' });
+  await expect(indexTitle).toBeVisible();
+  const titleContrast = await indexTitle.evaluate(title => {
+    const canvas = document.createElement('canvas');
+    canvas.width = canvas.height = 1;
+    const context = canvas.getContext('2d');
+    function luminance(color) {
+      context.clearRect(0, 0, 1, 1);
+      context.fillStyle = color;
+      context.fillRect(0, 0, 1, 1);
+      const channels = Array.from(context.getImageData(0, 0, 1, 1).data.slice(0, 3), byte => byte / 255);
+      const [r, g, b] = channels.map(value =>
+        value <= 0.04045 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4,
+      );
+      return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+    }
+    const text = luminance(getComputedStyle(title).color);
+    const background = luminance(getComputedStyle(title.closest('.collection-header')).backgroundColor);
+    return (Math.max(text, background) + 0.05) / (Math.min(text, background) + 0.05);
+  });
+  expect(titleContrast).toBeGreaterThanOrEqual(4.5);
   const topics = page.locator('.topic');
   const topicCounts = [8, 2, 7, 1, 3];
   await expect(topics).toHaveCount(topicCounts.length);

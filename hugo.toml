@@ -4,6 +4,14 @@ defaultContentLanguage = 'zh'
 title = 'Samson 的笔记'
 disableKinds = ['taxonomy', 'term']
 
+[[module.mounts]]
+source = 'assets'
+target = 'assets'
+
+[[module.mounts]]
+source = 'node_modules/@heroui/styles/dist/heroui.min.css'
+target = 'assets/css/heroui.css'
+
 [[menus.main]]
 name = '读书笔记'
 pageRef = '/notes'

@@ -1,16 +1,19 @@
 {{ define "main" }}
 <section class="home-hero">
   <div class="home-copy">
-    <h1>读书笔记<span class="title-dot">.</span></h1>
+    <h1>读书笔记</h1>
     <div class="intro">{{ .Content }}</div>
-    {{ with site.GetPage "/notes" }}<a class="button" href="{{ .RelPermalink }}">浏览读书笔记 <span aria-hidden="true">↗</span></a>{{ end }}
+    {{ with site.GetPage "/notes" }}<a class="button button--primary button--lg" href="{{ .RelPermalink }}">浏览读书笔记 <span aria-hidden="true">→</span></a>{{ end }}
   </div>
   {{ with site.GetPage "/notes/vibe-coding/oil-book" }}
-  <a class="feature" href="{{ .RelPermalink }}">
-    <span class="feature-series">Vibe<br>Coding</span>
-    <span class="feature-caption">
-      <span>{{ .Title }}</span>
-      <span aria-hidden="true">↗</span>
+  <a class="card card--default feature" href="{{ .RelPermalink }}">
+    <img src="{{ "images/reading-desk.webp" | relURL }}" alt="" width="1200" height="900" fetchpriority="high">
+    <span class="card__header feature-caption">
+      <span class="feature-copy">
+        <span class="feature-series">Vibe Coding</span>
+        <span class="card__title">{{ .Title }}</span>
+      </span>
+      <span class="card-arrow" aria-hidden="true">→</span>
     </span>
   </a>
   {{ end }}

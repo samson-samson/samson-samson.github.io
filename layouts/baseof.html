@@ -1,12 +1,14 @@
 <!doctype html>
-<html lang="{{ site.Language.Locale }}">
+<html lang="{{ site.Language.Locale }}" data-theme="light">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ .Title }} · {{ site.Title }}{{ end }}</title>
   {{ with .Description }}<meta name="description" content="{{ . }}">{{ end }}
   <link rel="canonical" href="{{ .Permalink }}">
-  {{ $css := resources.Get "css/site.css" | minify | fingerprint }}
+  {{ $heroui := resources.Get "css/heroui.css" }}
+  {{ if not $heroui }}{{ errorf "HeroUI styles are missing. Run npm ci before building the site." }}{{ end }}
+  {{ $css := resources.Concat "css/blog.css" (slice $heroui (resources.Get "css/site.css")) | fingerprint }}
   <link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">
   {{ range .AlternativeOutputFormats }}
   <link rel="{{ .Rel }}" type="{{ .MediaType.Type }}" href="{{ .RelPermalink }}" title="{{ $.Title }}">
@@ -27,7 +29,7 @@
       </nav>
     </div>
   </header>
-  <main id="main" class="shell">
+  <main id="main" class="shell" tabindex="-1">
     {{ block "main" . }}{{ end }}
   </main>
   <footer class="site-footer">
