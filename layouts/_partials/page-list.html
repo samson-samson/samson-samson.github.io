@@ -1,0 +1,13 @@
+<ul class="page-list">
+  {{ range . }}
+  <li>
+    <a href="{{ .RelPermalink }}">
+      <span class="page-list-copy">
+        <span class="page-list-title">{{ .Title }}</span>
+        {{ with .Description }}<span class="page-list-description">{{ . }}</span>{{ end }}
+      </span>
+      <span class="page-list-arrow" aria-hidden="true">↗</span>
+    </a>
+  </li>
+  {{ end }}
+</ul>

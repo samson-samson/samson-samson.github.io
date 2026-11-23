@@ -1,0 +1,11 @@
+{{ define "main" }}
+{{ partial "breadcrumbs.html" . }}
+<article class="note">
+  <header class="section-header">
+    <h1>{{ .Title }}</h1>
+    {{ if .Description }}<p class="intro">{{ .Description }}</p>{{ end }}
+    {{ if not .Date.IsZero }}<time class="meta" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time>{{ end }}
+  </header>
+  <div class="prose">{{ .Content }}</div>
+</article>
+{{ end }}

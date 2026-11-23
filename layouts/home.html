@@ -1,0 +1,22 @@
+{{ define "main" }}
+<section class="home-hero">
+  <div class="home-copy">
+    <h1>读书笔记<span class="title-dot">.</span></h1>
+    <div class="intro">{{ .Content }}</div>
+    {{ with site.GetPage "/notes" }}<a class="button" href="{{ .RelPermalink }}">浏览读书笔记 <span aria-hidden="true">↗</span></a>{{ end }}
+  </div>
+  {{ with site.GetPage "/notes/vibe-coding/oil-book" }}
+  <a class="feature" href="{{ .RelPermalink }}">
+    <span class="feature-series">Vibe<br>Coding</span>
+    <span class="feature-caption">
+      <span>{{ .Title }}</span>
+      <span aria-hidden="true">↗</span>
+    </span>
+  </a>
+  {{ end }}
+</section>
+<section class="home-sections" aria-labelledby="sections-title">
+  <h2 id="sections-title">栏目</h2>
+  {{ partial "page-list.html" site.Sections.ByWeight }}
+</section>
+{{ end }}

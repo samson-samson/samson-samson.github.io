@@ -1,0 +1,19 @@
+baseURL = 'https://samson-samson.github.io/'
+locale = 'zh-Hans-CN'
+defaultContentLanguage = 'zh'
+title = 'Samson 的笔记'
+disableKinds = ['taxonomy', 'term']
+
+[[menus.main]]
+name = '读书笔记'
+pageRef = '/notes'
+weight = 10
+
+[[menus.main]]
+name = '随笔'
+pageRef = '/essays'
+weight = 20
+
+[markup.tableOfContents]
+startLevel = 2
+endLevel = 3

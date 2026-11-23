@@ -1,0 +1,8 @@
+<nav class="breadcrumbs" aria-label="当前位置">
+  <ol>
+    {{ range .Ancestors.Reverse }}
+    <li><a href="{{ .RelPermalink }}">{{ if .IsHome }}首页{{ else }}{{ .Title }}{{ end }}</a></li>
+    {{ end }}
+    <li aria-current="page">{{ .Title }}</li>
+  </ol>
+</nav>

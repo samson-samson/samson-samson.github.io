@@ -1,0 +1,58 @@
+{{ define "main" }}
+{{ partial "breadcrumbs.html" . }}
+{{ $topics := .Params.topics }}
+{{ $articleCount := 0 }}
+{{ range $topics }}{{ $articleCount = add $articleCount (len .articles) }}{{ end }}
+<article>
+  <header class="collection-header">
+    <div>
+      <p class="collection-series">Vibe Coding</p>
+      <h1>{{ .Title }}</h1>
+      <p class="collection-description">{{ .Description }}</p>
+    </div>
+    <p class="collection-count">{{ len $topics }} 个专题 <span aria-hidden="true">/</span> {{ $articleCount }} 篇文章</p>
+  </header>
+  <div class="collection-body">
+    <aside class="collection-sidebar">
+      <nav aria-labelledby="topic-nav-title">
+        <h2 id="topic-nav-title">专题目录</h2>
+        <ul>
+          {{ range $topics }}
+          <li><a href="#{{ .id }}"><span>{{ .title }}</span><span class="topic-count">{{ len .articles }}</span></a></li>
+          {{ end }}
+        </ul>
+      </nav>
+    </aside>
+    <div class="collection-content">
+      <div class="collection-intro">
+        {{ .Content }}
+        <div class="collection-meta">
+          <span>原文作者 {{ .Params.author }}</span>
+          <a href="{{ .Params.source }}">Oil Book 原站目录 <span aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+      {{ range $topics }}
+      <section class="topic" aria-labelledby="{{ .id }}">
+        <header class="topic-heading">
+          <h2 id="{{ .id }}">{{ .title }}</h2>
+          <span>{{ len .articles }} 篇</span>
+        </header>
+        {{ with .note }}<p class="topic-note">{{ . }}</p>{{ end }}
+        <ul class="reading-list">
+          {{ range .articles }}
+          <li class="reading-item">
+            <div class="reading-title">
+              {{ with .chapter }}<span class="chapter">第 {{ . }} 章</span>{{ end }}
+              <h3><a href="{{ .url }}">{{ .title }} <span aria-hidden="true">↗</span></a></h3>
+              {{ if .pro }}<span class="pro-badge" title="原站 Pro 会员文章">Pro</span>{{ end }}
+            </div>
+            <p>{{ .summary }}</p>
+          </li>
+          {{ end }}
+        </ul>
+      </section>
+      {{ end }}
+    </div>
+  </div>
+</article>
+{{ end }}
