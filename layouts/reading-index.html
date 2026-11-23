@@ -1,0 +1,59 @@
+{{ define "main" }}
+{{ partial "breadcrumbs.html" . }}
+{{ $topics := .Params.topics }}
+{{ $articleCount := 0 }}
+{{ range $topics }}{{ $articleCount = add $articleCount (len .articles) }}{{ end }}
+<article>
+  <header class="card card--default collection-header" data-theme="dark">
+    <div class="card__header collection-heading">
+      <p class="collection-series">Vibe Coding</p>
+      <h1>{{ .Title }}</h1>
+      <p class="collection-description">{{ .Description }}</p>
+      <div class="collection-actions">
+        <a class="button button--primary button--sm" href="{{ .Params.source }}">查看原站 <span aria-hidden="true">↗</span></a>
+        <p class="collection-count">{{ len $topics }} 个专题 <span aria-hidden="true">·</span> {{ $articleCount }} 篇文章</p>
+      </div>
+    </div>
+    <img class="collection-cover" src="{{ "images/reading-desk.webp" | relURL }}" alt="" width="1200" height="900">
+  </header>
+  <div class="collection-body">
+    <aside class="card card--default collection-sidebar">
+      <nav aria-labelledby="topic-nav-title">
+        <h2 id="topic-nav-title">专题目录</h2>
+        <ul>
+          {{ range $topics }}
+          <li><a href="#{{ .id }}"><span>{{ .title }}</span><span class="chip chip--sm chip--secondary topic-count">{{ len .articles }}</span></a></li>
+          {{ end }}
+        </ul>
+      </nav>
+    </aside>
+    <div class="collection-content">
+      <div class="collection-intro">
+        {{ .Content }}
+        <p class="collection-meta">原文作者 {{ .Params.author }}</p>
+      </div>
+      {{ range $topics }}
+      <section class="card card--default topic" aria-labelledby="{{ .id }}">
+        <header class="card__header topic-heading">
+          <h2 class="card__title" id="{{ .id }}">{{ .title }}</h2>
+          <span class="chip chip--sm chip--secondary">{{ len .articles }} 篇</span>
+        </header>
+        {{ with .note }}<p class="topic-note">{{ . }}</p>{{ end }}
+        <ul class="card__content reading-list">
+          {{ range .articles }}
+          <li class="reading-item">
+            <div class="reading-title">
+              {{ with .chapter }}<span class="chapter">第 {{ . }} 章</span>{{ end }}
+              <h3><a href="{{ .url }}">{{ .title }} <span aria-hidden="true">↗</span></a></h3>
+              {{ if .pro }}<span class="chip chip--sm chip--soft chip--accent pro-badge" title="原站 Pro 会员文章">Pro</span>{{ end }}
+            </div>
+            <p>{{ .summary }}</p>
+          </li>
+          {{ end }}
+        </ul>
+      </section>
+      {{ end }}
+    </div>
+  </div>
+</article>
+{{ end }}

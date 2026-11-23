@@ -1,0 +1,27 @@
+baseURL = 'https://samson-samson.github.io/'
+locale = 'zh-Hans-CN'
+defaultContentLanguage = 'zh'
+title = 'Samson 的笔记'
+disableKinds = ['taxonomy', 'term']
+
+[[module.mounts]]
+source = 'assets'
+target = 'assets'
+
+[[module.mounts]]
+source = 'node_modules/@heroui/styles/dist/heroui.min.css'
+target = 'assets/css/heroui.css'
+
+[[menus.main]]
+name = '读书笔记'
+pageRef = '/notes'
+weight = 10
+
+[[menus.main]]
+name = '随笔'
+pageRef = '/essays'
+weight = 20
+
+[markup.tableOfContents]
+startLevel = 2
+endLevel = 3

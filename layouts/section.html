@@ -1,0 +1,12 @@
+{{ define "main" }}
+{{ partial "breadcrumbs.html" . }}
+<header class="section-header">
+  <h1>{{ .Title }}</h1>
+  <div class="intro">{{ .Content }}</div>
+</header>
+{{ with .Pages.ByWeight }}
+  {{ partial "page-list.html" . }}
+{{ else }}
+  <p class="card card--default empty-state">这个栏目还没有发布文章。</p>
+{{ end }}
+{{ end }}

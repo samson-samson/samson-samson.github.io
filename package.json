@@ -1,0 +1,11 @@
+{
+  "name": "samson-reading-notes",
+  "private": true,
+  "scripts": {
+    "test": "playwright test"
+  },
+  "devDependencies": {
+    "@heroui/styles": "3.2.8",
+    "@playwright/test": "1.65.1"
+  }
+}
